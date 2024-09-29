@@ -47,13 +47,23 @@ function blogtec_admin_enqueue_scripts() {
 add_action('admin_enqueue_scripts', 'blogtec_admin_enqueue_scripts');
 
 function blogtec_add_pricing_admin_menu() {
+    add_menu_page(
+        __('Blogtec Features', 'blogtec-features-manager'), // Main menu page title
+        __('Blogtec Features', 'blogtec-features-manager'), // Menu label in admin
+        'manage_options', // Capability
+        'blogtec-features-manager', // Main menu slug
+        'blogtec_admin_page', // Main menu page callback function
+        'dashicons-admin-generic', // Icon
+        6 // Menu position
+    );
+
     add_submenu_page(
-        'blogtec-features-manager',  // Parent slug (the slug of the main menu page)
-        __('Pricing Table', 'blogtec-features-manager'),  // Page title
-        __('Pricing Table', 'blogtec-features-manager'),  // Menu title
-        'manage_options',  // Capability
-        'blogtec-pricing-table',  // Menu slug
-        'blogtec_render_pricing_page'  // Function that renders the page
+        'blogtec-features-manager', // Parent slug
+        __('Pricing Table', 'blogtec-features-manager'), // Page title
+        __('Pricing Table', 'blogtec-features-manager'), // Submenu title
+        'manage_options', // Capability
+        'blogtec-pricing-table', // Submenu slug
+        'blogtec_render_pricing_page' // Callback function
     );
 }
 add_action('admin_menu', 'blogtec_add_pricing_admin_menu');
