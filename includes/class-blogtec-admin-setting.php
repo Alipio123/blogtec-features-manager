@@ -15,16 +15,14 @@ class Blogtec_Admin_Setting {
         add_action('admin_init', array($this, 'register_settings'));
     }
 
-    // Add the admin menu
+    // Add the admin submenu under 'Settings'
     public function add_admin_menu() {
-        add_menu_page(
+        add_options_page(
             __('Blogtec Features Settings', 'blogtec-features-manager'), // Page title
             __('Blogtec Features', 'blogtec-features-manager'),          // Menu title
             'manage_options',                                            // Capability
             'blogtec-features-settings',                                 // Menu slug
-            array($this, 'settings_page'),                               // Callback function
-            '',                                                          // Icon URL (optional)
-            3                                                           // Position in menu
+            array($this, 'settings_page')                                // Callback function
         );
     }
 
