@@ -46,18 +46,18 @@ function blogtec_admin_enqueue_scripts() {
 }
 add_action('admin_enqueue_scripts', 'blogtec_admin_enqueue_scripts');
 
-// Create a custom admin page for managing the pricing table
 function blogtec_add_pricing_admin_menu() {
     add_submenu_page(
-        'blogtec-features-manager',
-        __('Pricing Table', 'blogtec-features-manager'),
-        __('Pricing Table', 'blogtec-features-manager'),
-        'manage_options',
-        'blogtec-pricing-table',
-        'blogtec_render_pricing_page'
+        'blogtec-features-manager',  // Parent slug (the slug of the main menu page)
+        __('Pricing Table', 'blogtec-features-manager'),  // Page title
+        __('Pricing Table', 'blogtec-features-manager'),  // Menu title
+        'manage_options',  // Capability
+        'blogtec-pricing-table',  // Menu slug
+        'blogtec_render_pricing_page'  // Function that renders the page
     );
 }
 add_action('admin_menu', 'blogtec_add_pricing_admin_menu');
+
 
 // Render the admin page for the pricing table
 function blogtec_render_pricing_page() {
