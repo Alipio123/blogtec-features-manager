@@ -19,9 +19,10 @@ if (!defined('ABSPATH')) {
 define('BLOGTEC_PLUGIN_VERSION', '1.0.0');
 define('BLOGTEC_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('BLOGTEC_PLUGIN_URL', plugin_dir_url(__FILE__));
-require_once plugin_dir_path(__FILE__) . 'includes/plugin-update-checker-master/plugin-update-checker.php';
+require BLOGTEC_PLUGIN_DIR . 'includes/plugin-update-checker-master/plugin-update-checker.php';
 
 // Initialize the update checker
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 $update_checker = PucFactory::buildUpdateChecker(
     'https://github.com/Alipio123/blogtec-features-manager/',
     __FILE__,
