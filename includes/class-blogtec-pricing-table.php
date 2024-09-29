@@ -187,7 +187,7 @@ class Blogtec_Pricing_Table {
                     <thead>
                         <tr>
                             <th><?php _e('Word Count Range', 'blogtec-features-manager'); ?></th>
-                            <th><?php _e('Price', 'blogtec-features-manager'); ?></th>
+                            <th><?php _e('Price (€)', 'blogtec-features-manager'); ?></th>
                             <th><?php _e('Actions', 'blogtec-features-manager'); ?></th>
                         </tr>
                     </thead>
