@@ -131,11 +131,11 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
 
         $this->end_controls_section();
 
-        // Add Style Tab Controls for Slider Labels
+        // Add Style Tab Controls for Slider Style
         $this->start_controls_section(
-            'slider_label_style_section',
+            'slider_style_section',
             [
-                'label' => __('Slider Labels', 'blogtec-features-manager'),
+                'label' => __('Slider Style', 'blogtec-features-manager'),
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
             ]
         );
@@ -158,6 +158,34 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .slider-label' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        // Background color for the slider track
+        $this->add_control(
+            'slider_background_color',
+            [
+                'label' => __('Slider Background Color', 'blogtec-features-manager'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} input[type="range"]::-webkit-slider-runnable-track' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} input[type="range"]::-moz-range-track' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} input[type="range"]::-ms-track' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        // Thumb (slider handle) color for the slider input
+        $this->add_control(
+            'slider_knob_color',
+            [
+                'label' => __('Slider Handle Color', 'blogtec-features-manager'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} input[type="range"]::-webkit-slider-thumb' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} input[type="range"]::-moz-range-thumb' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} input[type="range"]::-ms-thumb' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
