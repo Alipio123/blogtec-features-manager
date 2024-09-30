@@ -1,52 +1,61 @@
 # Blogtec Features Manager
 
-**Version:** 1.0.0  
+**Plugin Name:** Blogtec Features Manager  
+**Plugin URI:** [https://blogtec.io](https://blogtec.io)  
+**Description:** A custom plugin to manage all Blogtec.io-specific features and functionalities, including pricing tables, dynamic slider controls, and custom Elementor widgets.  
+**Version:** 1.3.0  
 **Author:** Alipio Gabriel  
 **License:** GPL2  
 
-## Description
-The **Blogtec Features Manager** plugin is a custom WordPress plugin designed to manage various features for Blogtec.io, with the initial focus on **Pricing Table** management. The plugin is modular, allowing you to toggle the pricing table feature on or off from the WordPress admin settings.
+## Features
 
-### Key Features:
-- **Pricing Table Management**: Create, update, and delete pricing tables for different content categories.
-- **Admin Settings Page**: Toggle the Pricing Table feature on/off via an easy-to-use settings page.
-- **Predefined Categories**: Automatically initializes a default "SEO Content" category with predefined word count ranges and prices.
-- **User-Friendly UI**: Manage categories and pricing tables from the WordPress admin dashboard.
-- **Modular Structure**: Enables seamless integration of additional features in future updates.
+### v1.3.0 Highlights:
+- **New:** Blogtec Slider Control Widget for dynamically controlling the pricing table data.
+- **New:** Integrated with Blogtec Pricing Table stored in the WordPress database.
+- **New:** Customizable styles for slider handle, track, and labels via Elementor style controls.
+- **New:** Syncs slider values with the Initial Number Display widget for real-time updates.
+- **Fix:** Resolved slider and label alignment issues.
+
+### Other Features:
+- Manage custom pricing tables with dynamic control using Elementor widgets.
+- Elementor widget for displaying and controlling number ranges based on pricing.
+- Integrated admin settings for pricing and other custom features.
+  
+## Requirements
+
+- **WordPress:** v5.5 or higher
+- **Elementor:** v3.0 or higher
 
 ## Installation
-1. Clone or download the plugin into your WordPress plugins directory (`/wp-content/plugins/`).
-2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Navigate to **Blogtec Features** in the admin menu to configure settings and enable the Pricing Table feature.
+
+1. Download and install the Blogtec Features Manager plugin.
+2. Activate the plugin through the 'Plugins' screen in WordPress.
+3. Navigate to Elementor -> Widgets to find the custom Blogtec widgets.
+4. Use the Slider Control Widget to manage dynamic data from the pricing table.
+
+## Changelog
+
+### v1.3.0
+- Added Blogtec Slider Control Widget.
+- Integrated pricing table data retrieval from the WordPress database.
+- Implemented slider customization for handle and track styles.
+- Fixed slider alignment issues with labels.
+- Synced slider with the Initial Number Display widget.
+
+### v1.2.0
+- Added pricing table creation and management.
+- Introduced Initial Number Display widget for Elementor.
+- Admin settings for controlling custom features.
+
+### v1.0.0
+- Initial release of Blogtec Features Manager.
 
 ## Usage
-1. Once activated, go to **Blogtec Features Settings** in the WordPress admin dashboard to enable or disable the Pricing Table feature.
-2. After enabling the Pricing Table, a new menu item called **Pricing Table** will appear in the admin dashboard.
-3. Add new categories, manage pricing for different word count ranges, and delete unnecessary rows or categories.
 
-### Admin Settings
-- **Enable Pricing Table Feature**: Toggle the Pricing Table functionality from the settings page under **Blogtec Features Settings**.
-  
-### Pricing Table Management
-- **Add New Category**: Allows you to create new pricing categories. Default word count ranges and prices will automatically populate for new categories.
-- **Delete Category**: Remove categories and their associated pricing data.
-- **Edit Pricing**: Modify pricing for word count ranges within each category.
-
-## Custom Database Tables
-- The plugin creates two custom database tables:
-  - **wp_blogtec_pricing**: Stores word count ranges, prices, and category IDs.
-  - **wp_blogtec_pricing_categories**: Stores pricing categories.
-  
-## Changelog
-### 1.0.0
-- Initial release with Pricing Table functionality.
+1. Create pricing tables via the WordPress admin panel.
+2. Use the Elementor widgets to display dynamic data (e.g., Word Count and Pricing).
+3. Customize the slider appearance in Elementor's style tab.
 
 ## License
-This plugin is licensed under the GPL2 license.
 
----
-
-### Author
-**Alipio Gabriel**  
-[Blogtec.io](https://blogtec.io)
-
+Blogtec Features Manager is open-source software licensed under the GPL2.
