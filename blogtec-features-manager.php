@@ -3,7 +3,7 @@
 Plugin Name: Blogtec Features Manager
 Plugin URI: https://blogtec.io
 Description: A custom plugin to manage all Blogtec.io specific features and functionalities.
-Version: 1.2.0
+Version: 1.3.0
 Author: Alipio Gabriel
 Author URI: https://blogtec.io
 License: GPL2
@@ -59,3 +59,21 @@ function blogtec_enqueue_scripts() {
     wp_enqueue_script('blogtec-script', BLOGTEC_PLUGIN_URL . 'assets/js/script.js', array('jquery'), BLOGTEC_PLUGIN_VERSION, true);
 }
 add_action('wp_enqueue_scripts', 'blogtec_enqueue_scripts');
+
+// Add this at the top of your main plugin file
+$options = get_option('blogtec_features_settings', array());
+
+// Check if the custom features are enabled
+if (isset($options['enable_custom_features']) && $options['enable_custom_features']) {
+    add_action('elementor/widgets/widgets_registered', 'blogtec_register_custom_widgets');
+}
+
+function blogtec_register_custom_widgets() {
+    // Include the widget files
+    require BLOGTEC_PLUGIN_DIR . 'includes/widgets/class-blogtec-initial-number-widget.php';
+    require BLOGTEC_PLUGIN_DIR . 'includes/widgets/class-blogtec-slider-control-widget.php';
+
+    // Register the widgets
+    \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Blogtec_Initial_Number_Widget());
+    \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Blogtec_Slider_Control_Widget());
+}

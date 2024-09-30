@@ -30,21 +30,35 @@ class Blogtec_Admin_Setting {
 
     // Register settings
     public function register_settings() {
-        register_setting($this->get_option_name(), $this->get_option_name(), array($this, 'sanitize_settings'));
-
-        add_settings_section(
-            'blogtec_features_section',                                  // Section ID
-            __('Features Settings', 'blogtec-features-manager'),          // Title
-            null,                                                        // Callback (not needed)
-            'blogtec-features-settings'                                  // Page slug
+        register_setting(
+            $this->get_option_name(), 
+            $this->get_option_name(), 
+            array($this, 'sanitize_settings')
         );
 
+        add_settings_section(
+            'blogtec_features_section',                                   // Section ID
+            __('Features Settings', 'blogtec-features-manager'),          // Title
+            null,                                                         // Callback (not needed)
+            'blogtec-features-settings'                                   // Page slug
+        );
+
+        // Existing setting: Enable Pricing Table Feature
         add_settings_field(
-            'enable_pricing_table',                                      // Field ID
+            'enable_pricing_table',                                       // Field ID
             __('Enable Pricing Table Feature', 'blogtec-features-manager'), // Title
-            array($this, 'render_pricing_table_toggle'),                 // Callback to render the field
-            'blogtec-features-settings',                                 // Page slug
-            'blogtec_features_section'                                   // Section ID
+            array($this, 'render_pricing_table_toggle'),                  // Callback to render the field
+            'blogtec-features-settings',                                  // Page slug
+            'blogtec_features_section'                                    // Section ID
+        );
+
+        // New setting: Enable Custom Features
+        add_settings_field(
+            'enable_custom_features',                                     // Field ID
+            __('Enable Custom Features', 'blogtec-features-manager'),     // Title
+            array($this, 'render_custom_features_toggle'),                // Callback to render the field
+            'blogtec-features-settings',                                  // Page slug
+            'blogtec_features_section'                                    // Section ID
         );
     }
 
@@ -63,6 +77,16 @@ class Blogtec_Admin_Setting {
         <?php
     }
 
+    // **New method**: Callback to render the custom features toggle field
+    public function render_custom_features_toggle() {
+        $options = $this->get_options();
+        $checked = isset($options['enable_custom_features']) ? $options['enable_custom_features'] : 0;
+        ?>
+        <input type="checkbox" name="<?php echo esc_attr($this->get_option_name()); ?>[enable_custom_features]" value="1" <?php checked(1, $checked, true); ?>>
+        <label for="enable_custom_features"><?php esc_html_e('Enable the Custom Elementor Widgets', 'blogtec-features-manager'); ?></label>
+        <?php
+    }
+
     // Get the current options
     private function get_options() {
         return get_option($this->get_option_name(), array());
@@ -71,7 +95,13 @@ class Blogtec_Admin_Setting {
     // Sanitize the settings input
     public function sanitize_settings($input) {
         $new_input = array();
-        $new_input['enable_pricing_table'] = isset($input['enable_pricing_table']) ? 1 : 0; // Ensure it's a boolean value
+
+        // Sanitize existing setting
+        $new_input['enable_pricing_table'] = isset($input['enable_pricing_table']) ? 1 : 0;
+
+        // **New setting**: Sanitize the custom features setting
+        $new_input['enable_custom_features'] = isset($input['enable_custom_features']) ? 1 : 0;
+
         return $new_input;
     }
 
@@ -82,7 +112,7 @@ class Blogtec_Admin_Setting {
             <h1><?php esc_html_e('Blogtec Features Settings', 'blogtec-features-manager'); ?></h1>
             <form action="options.php" method="post">
                 <?php
-                settings_fields($this->get_option_name());   // Output security fields for the registered setting
+                settings_fields($this->get_option_name());          // Output security fields for the registered setting
                 do_settings_sections('blogtec-features-settings');  // Output settings sections and fields
                 submit_button();
                 ?>
