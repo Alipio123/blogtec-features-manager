@@ -9,7 +9,7 @@ class Blogtec_Initial_Number_Widget extends \Elementor\Widget_Base {
     }
 
     public function get_title() {
-        return __('Initial Number Display', 'blogtec');
+        return __('Custom Number Range', 'blogtec');
     }
 
     public function get_icon() {

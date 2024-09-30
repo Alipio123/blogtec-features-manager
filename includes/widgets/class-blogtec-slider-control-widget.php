@@ -9,7 +9,7 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
     }
 
     public function get_title() {
-        return __('Slider Control Widget', 'blogtec');
+        return __('Slider Control Widget', 'blogtec-features-manager');
     }
 
     public function get_icon() {
@@ -22,12 +22,34 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
 
     protected function _register_controls() {
 
-        // Existing Control Section for Settings
+        // Control Section for Settings
         $this->start_controls_section(
             'control_section',
             [
-                'label' => __('Control Settings', 'blogtec'),
+                'label' => __('Control Settings', 'blogtec-features-manager'),
                 'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+        // Add new control for the first heading
+        $this->add_control(
+            'first_heading',
+            [
+                'label' => __('First Heading', 'blogtec-features-manager'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => __('Choose word count', 'blogtec-features-manager'),
+                'description' => __('Provide the heading for the first range slider.', 'blogtec-features-manager'),
+            ]
+        );
+
+        // Add new control for the second heading
+        $this->add_control(
+            'second_heading',
+            [
+                'label' => __('Second Heading', 'blogtec-features-manager'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => __('Choose number of pieces', 'blogtec-features-manager'),
+                'description' => __('Provide the heading for the second range slider.', 'blogtec-features-manager'),
             ]
         );
 
@@ -35,9 +57,9 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'controlled_widget_id',
             [
-                'label' => __('Controlled Widget ID', 'blogtec'),
+                'label' => __('Controlled Widget ID', 'blogtec-features-manager'),
                 'type' => \Elementor\Controls_Manager::TEXT,
-                'description' => __('Enter the Controlled Widget ID of the Initial Number Display widget to control.', 'blogtec'),
+                'description' => __('Enter the Controlled Widget ID of the Initial Number Display widget to control.', 'blogtec-features-manager'),
             ]
         );
 
@@ -45,20 +67,75 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'pricing_table_id',
             [
-                'label' => __('Select Pricing Table', 'blogtec'),
+                'label' => __('Select Pricing Table', 'blogtec-features-manager'),
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'options' => $this->get_pricing_tables(),
-                'description' => __('Select a Blogtec Pricing Table to base the data on.', 'blogtec'),
+                'description' => __('Select a Blogtec Pricing Table to base the data on.', 'blogtec-features-manager'),
             ]
         );
 
         $this->end_controls_section();
 
-        // Add Style Tab Controls
+        // Add Style Tab Controls for Headings
+        $this->start_controls_section(
+            'heading_style_section',
+            [
+                'label' => __('Headings Style', 'blogtec-features-manager'),
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        // Typography control for first heading
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'first_heading_typography',
+                'label' => __('First Heading Typography', 'blogtec-features-manager'),
+                'selector' => '{{WRAPPER}} .first-heading',
+            ]
+        );
+
+        // Color control for first heading
+        $this->add_control(
+            'first_heading_color',
+            [
+                'label' => __('First Heading Color', 'blogtec-features-manager'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .first-heading' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        // Typography control for second heading
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'second_heading_typography',
+                'label' => __('Second Heading Typography', 'blogtec-features-manager'),
+                'selector' => '{{WRAPPER}} .second-heading',
+            ]
+        );
+
+        // Color control for second heading
+        $this->add_control(
+            'second_heading_color',
+            [
+                'label' => __('Second Heading Color', 'blogtec-features-manager'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .second-heading' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        // Add Style Tab Controls for Slider Labels
         $this->start_controls_section(
             'slider_label_style_section',
             [
-                'label' => __('Slider Labels', 'blogtec'),
+                'label' => __('Slider Labels', 'blogtec-features-manager'),
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
             ]
         );
@@ -68,7 +145,7 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
             \Elementor\Group_Control_Typography::get_type(),
             [
                 'name' => 'slider_label_typography',
-                'label' => __('Typography', 'blogtec'),
+                'label' => __('Typography', 'blogtec-features-manager'),
                 'selector' => '{{WRAPPER}} .slider-label',
             ]
         );
@@ -77,38 +154,10 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'slider_label_color',
             [
-                'label' => __('Label Color', 'blogtec'),
+                'label' => __('Label Color', 'blogtec-features-manager'),
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .slider-label' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        // Background color for the slider input track
-        $this->add_control(
-            'slider_background_color',
-            [
-                'label' => __('Slider Track Color', 'blogtec'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} input[type="range"]::-webkit-slider-runnable-track' => 'background: {{VALUE}};',
-                    '{{WRAPPER}} input[type="range"]::-moz-range-track' => 'background: {{VALUE}};',
-                    '{{WRAPPER}} input[type="range"]::-ms-track' => 'background: {{VALUE}};',
-                ],
-            ]
-        );
-
-        // Knob (thumb) color for the slider input
-        $this->add_control(
-            'slider_knob_color',
-            [
-                'label' => __('Slider Handle Color', 'blogtec'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} input[type="range"]::-webkit-slider-thumb' => 'background: {{VALUE}};',
-                    '{{WRAPPER}} input[type="range"]::-moz-range-thumb' => 'background: {{VALUE}};',
-                    '{{WRAPPER}} input[type="range"]::-ms-thumb' => 'background: {{VALUE}};',
                 ],
             ]
         );
@@ -121,8 +170,8 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
         global $wpdb;
 
         // Fetch all categories from the blogtec_pricing_categories table
-        $category_table_name = $wpdb->prefix . 'blogtec_pricing_categories';
-        $results = $wpdb->get_results("SELECT id, category_name FROM $category_table_name");
+        $table_name = $wpdb->prefix . 'blogtec_pricing_categories';
+        $results = $wpdb->get_results("SELECT id, category_name FROM $table_name");
 
         // Prepare an array to store category IDs and names
         $categories = [];
@@ -137,31 +186,77 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
 
     protected function render() {
         $settings = $this->get_settings_for_display();
-        $controlled_widget_id = $settings['controlled_widget_id'];
-        $pricing_table_id = $settings['pricing_table_id'];
+        $controlled_widget_id = esc_attr($settings['controlled_widget_id']);
+        $pricing_table_id = intval($settings['pricing_table_id']);
         $widget_id = $this->get_id();
+        $first_heading = $settings['first_heading'];
+        $second_heading = $settings['second_heading'];
 
         // Fetch data rows from the selected pricing table
         $data_rows = $this->get_pricing_table_data($pricing_table_id);
         if (empty($data_rows)) {
-            echo __('No data available for the selected pricing table.', 'blogtec');
+            echo esc_html__('No data available for the selected pricing table.', 'blogtec-features-manager');
             return;
         }
 
-        // Output the slider with Word Count labels
+        // Output the slider with Word Count and Pieces inputs
         ?>
         <div id="blogtec-slider-<?php echo esc_attr($widget_id); ?>" class="blogtec-slider-control">
-            <input type="range" min="0" max="<?php echo count($data_rows) - 1; ?>" value="0" step="1" />
+            <div class="flex-justify">
+                <div class="first-heading"><?php echo esc_html($first_heading); ?></div>
+                <div class="word_count_wrap"> 
+                    <span class="word_count-<?php echo esc_attr($widget_id); ?>">0</span> 
+                    <?php echo __('words', 'blogtec-features-manager'); ?>
+                </div>
+            </div>
+            
+            <input type="range" min="0" max="<?php echo esc_attr(count($data_rows) - 1); ?>" value="0" step="1" />
+
             <div class="slider-labels">
                 <?php foreach ($data_rows as $index => $row): ?>
-                    <span class="slider-label" style="left: <?php echo ($index / (count($data_rows) - 1)) * 100; ?>%;">
+                    <span class="slider-label" style="left: <?php echo esc_attr(($index / (count($data_rows) - 1)) * 100); ?>%;">
                         <?php echo esc_html($row['word_count_max']); ?>
                     </span>
                 <?php endforeach; ?>
             </div>
+
+            <!-- New Input for Number of Pieces -->
+            <div class="pieces_wrap">
+                <div class="flex-justify">
+                    <div class="second-heading"><?php echo esc_html($second_heading); ?></div>
+                    <div class="word_count_wrap">
+                        <span class="pieces_count-<?php echo esc_attr($widget_id); ?>">1</span> 
+                        <?php echo __('Post(s)', 'blogtec-features-manager'); ?>
+                    </div>
+                </div>
+                <input type="range" class="pieces-range" min="1" max="200" value="1" step="1" />
+                <div class="slider-labels">
+                    <?php for ($i = 1; $i <= 150; $i += 50): ?>
+                        <span class="slider-label" style="left: <?php echo (($i - 1) / 199) * 100; ?>%;">
+                            <?php echo $i; ?>
+                        </span>
+                    <?php endfor; ?>
+                    <!-- Last label for 200 -->
+                    <span class="slider-label" style="left: 100%;">200</span>
+                </div>
+            </div>
         </div>
 
         <style>
+            .word_count_wrap {
+                float: right;
+                font-size: 12px;
+            }
+
+            .pieces_wrap {
+                width: 100%;
+                margin-top: 30px;
+            }
+
+            .word_count_wrap span, .pieces_wrap span {
+                font-size: 12px;
+            }
+
             #blogtec-slider-<?php echo esc_attr($widget_id); ?> {
                 position: relative;
                 margin-top: 20px;
@@ -176,11 +271,10 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
             #blogtec-slider-<?php echo esc_attr($widget_id); ?> .slider-label {
                 text-align: center;
                 width: 30px;
-                margin-left: 0;
             }
 
             /* Ensure the slider input occupies 100% width */
-            #blogtec-slider-<?php echo esc_attr($widget_id); ?> input {
+            .blogtec-slider-control  input {
                 width: 100%;
             }
 
@@ -190,37 +284,33 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
                 border-radius: 100px;
             }
 
+            /* Slider track appearance */
+            #blogtec-slider-<?php echo esc_attr($widget_id); ?> input[type="range"]::-webkit-slider-runnable-track {
+                border-radius: 100px;
+            }
+
             /* Default thumb appearance */
             #blogtec-slider-<?php echo esc_attr($widget_id); ?> input[type="range"]::-webkit-slider-thumb {
                 -webkit-appearance: none;
                 appearance: none;
                 height: 25px;
                 width: 25px;
-                border-radius: 1%; /* Default to round */
-                margin-top: -4px;
-                margin-bottom: -4px;
+                border-radius: 50%;
                 cursor: pointer;
             }
 
-            #blogtec-slider-<?php echo esc_attr($widget_id); ?> input[type="range"]::-moz-range-thumb {
-                -webkit-appearance: none;
-                appearance: none;
-                height: 25px;
-                width: 25px;
-                border-radius: 1%; /* Default to round */
-                cursor: pointer;
+            .flex-justify {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
             }
 
-            #blogtec-slider-<?php echo esc_attr($widget_id); ?> input[type="range"]::-ms-thumb {
-                -webkit-appearance: none;
-                appearance: none;
-                height: 25px;
-                width: 25px;
-                border-radius: 1%; /* Default to round */
-               
-                cursor: pointer;
+            .flex-justify div {
+                display: inline-block;
+                vertical-align: middle;
+                margin: 0;
             }
-
         </style>
 
         <script>
@@ -228,20 +318,31 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
             $(document).ready(function() {
                 var dataRows = <?php echo json_encode(array_values($data_rows)); ?>;
                 var slider = $('#blogtec-slider-<?php echo esc_js($widget_id); ?> input[type="range"]');
+                var piecesSlider = $('.pieces-range');
                 var display = $('#blogtec-initial-number-<?php echo esc_js($controlled_widget_id); ?>');
+                var word_count_container = $('.word_count-<?php echo esc_attr($widget_id); ?>');
+                var piecesCountContainer = $('.pieces_count-<?php echo esc_attr($widget_id); ?>');
 
-                // Initialize the display with the first price value
+                // Initialize the display with the first price value and word count
                 if (display.length) {
-                    display.text(dataRows[0].price);  // Display the initial price value
+                    display.text(dataRows[0].price);
+                    word_count_container.text(dataRows[0].word_count_max);
                 }
 
-                slider.on('input change', function() {
-                    var index = $(this).val();
-                    var value = dataRows[index].price;  // Get the price corresponding to the word count range
+                function updatePrice() {
+                    var index = slider.val();
+                    var pieces = piecesSlider.val();
+                    var price = dataRows[index].price;
+                    var total = price * pieces;
                     if (display.length) {
-                        display.text(value);  // Update the initial widget with the price
+                        display.text(total);
+                        word_count_container.text(dataRows[index].word_count_max);
+                        piecesCountContainer.text(pieces);
                     }
-                });
+                }
+
+                slider.on('input change', updatePrice);
+                piecesSlider.on('input change', updatePrice);
             });
         })(jQuery);
         </script>
@@ -251,7 +352,7 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
     private function get_pricing_table_data($table_id) {
         global $wpdb;
 
-        // Fetch data from the blogtec_pricing table where category_id matches the selected category (table_id)
+        // Fetch data from the blogtec_pricing table
         $pricing_table_name = $wpdb->prefix . 'blogtec_pricing';
         $results = $wpdb->get_results($wpdb->prepare("
             SELECT word_count_range, price 

@@ -55,7 +55,7 @@ class Blogtec_Admin_Setting {
         // New setting: Enable Custom Features
         add_settings_field(
             'enable_custom_features',                                     // Field ID
-            __('Enable Custom Features', 'blogtec-features-manager'),     // Title
+            __('Enable Pricing Elementor Slider Range', 'blogtec-features-manager'),     // Title
             array($this, 'render_custom_features_toggle'),                // Callback to render the field
             'blogtec-features-settings',                                  // Page slug
             'blogtec_features_section'                                    // Section ID
