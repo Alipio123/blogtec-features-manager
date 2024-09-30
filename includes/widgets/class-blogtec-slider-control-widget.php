@@ -353,7 +353,7 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
 
                 // Initialize the display with the first price value and word count
                 if (display.length) {
-                    display.text(dataRows[0].price);
+                    display.text(parseInt(dataRows[0].price));
                     word_count_container.text(dataRows[0].word_count_max);
                 }
 
