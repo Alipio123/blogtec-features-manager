@@ -3,7 +3,7 @@
 Plugin Name: Blogtec Features Manager
 Plugin URI: https://blogtec.io
 Description: A custom plugin to manage all Blogtec.io specific features and functionalities.
-Version: 1.3.3
+Version: 1.3.4
 Author: Alipio Gabriel
 Author URI: https://blogtec.io
 License: GPL2
@@ -39,8 +39,13 @@ $update_checker->setBranch('main');
 // Plugin activation hook
 function blogtec_features_manager_activate() {
     // Code to run during activation (e.g., creating custom tables or options)
-    //$blogtec_pricingTable = new Blogtec_Pricing_Table();
-    //$blogtec_pricingTable->create_pricing_table();
+    $blogtec_pricingTable = new Blogtec_Pricing_Table();
+
+    // Check if the tables already exist before creating them
+    if (!$blogtec_pricingTable->check_table_exists()) {
+        // If the table doesn't exist, create it
+        $blogtec_pricingTable->create_pricing_table();
+    }
 }
 register_activation_hook(__FILE__, 'blogtec_features_manager_activate');
 

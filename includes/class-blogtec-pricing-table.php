@@ -34,6 +34,18 @@ class Blogtec_Pricing_Table {
         return $this->category_table_name;
     }
 
+    // Method to check if the pricing table exists
+    public function check_table_exists() {
+        global $wpdb;
+
+        // Check if the pricing table exists
+        $table_exists = $wpdb->get_var("SHOW TABLES LIKE '{$this->table_name}'") == $this->table_name;
+
+        // Return true if the table exists, false otherwise
+        return $table_exists;
+    }
+    
+
     // Create database tables
     public function create_pricing_table() {
         global $wpdb;
@@ -61,39 +73,59 @@ class Blogtec_Pricing_Table {
         ";
         dbDelta($pricing_sql);
 
-        $this->insert_default_category_and_pricing();
+        // Insert default categories and pricing
+        $this->insert_default_categories_and_pricing();
     }
 
-    // Insert default category and pricing
-    private function insert_default_category_and_pricing() {
+    // Insert default categories and pricing
+    private function insert_default_categories_and_pricing() {
         global $wpdb;
-        $default_category = 'SEO Content';
-        $category_id = $wpdb->get_var($wpdb->prepare("SELECT id FROM {$this->get_category_table_name()} WHERE category_name = %s", $default_category));
 
-        if (!$category_id) {
-            $wpdb->insert($this->get_category_table_name(), array('category_name' => $default_category));
-            $category_id = $wpdb->insert_id;
-            $this->insert_initial_pricing_data($category_id);
-        }
-    }
-
-    // Insert initial pricing data
-    private function insert_initial_pricing_data($category_id) {
-        global $wpdb;
-        $ranges = [
-            '0-200' => 35, '200-400' => 52, '400-600' => 69,
-            '600-800' => 86, '800-1000' => 103, '1000-1200' => 120,
-            '1200-1400' => 137, '1400-1600' => 154, '1600-1800' => 171,
-            '1800-2000' => 188, '2000-2200' => 205, '2200-2400' => 222,
-            '2400-2600' => 239, '2600-2800' => 256, '2800-3000' => 315
+        $categories_with_pricing = [
+            'SEO Content' => [
+                '0-200' => 35, '200-400' => 52, '400-600' => 69, '600-800' => 89, '800-1000' => 115, 
+                '1000-1200' => 135, '1200-1400' => 155, '1400-1600' => 175, '1600-1800' => 195, 
+                '1800-2000' => 215, '2000-2200' => 235, '2200-2400' => 255, '2400-2600' => 275, 
+                '2600-2800' => 295, '2800-3000' => 315
+            ],
+            'SEO Translation' => [
+                '0-200' => 25, '200-400' => 35, '400-600' => 44, '600-800' => 52, '800-1000' => 59, 
+                '1000-1200' => 68, '1200-1400' => 77, '1400-1600' => 85, '1600-1800' => 93, 
+                '1800-2000' => 101, '2000-2200' => 109, '2200-2400' => 117, '2400-2600' => 125, 
+                '2600-2800' => 133, '2800-3000' => 141
+            ],
+            'Content Optimization' => [
+                '0-600' => 36, '600-1200' => 65, '1200-1800' => 95, '1800-2400' => 125, '2400-3000' => 155
+            ]
         ];
 
-        foreach ($ranges as $range => $price) {
-            $wpdb->insert($this->get_table_name(), array(
-                'word_count_range' => sanitize_text_field($range),
-                'price' => floatval($price),
-                'category_id' => intval($category_id)
-            ));
+        foreach ($categories_with_pricing as $category_name => $pricing_data) {
+            // Check if category exists
+            $category_id = $wpdb->get_var($wpdb->prepare("SELECT id FROM {$this->get_category_table_name()} WHERE category_name = %s", $category_name));
+
+            // If category doesn't exist, insert it
+            if (!$category_id) {
+                $wpdb->insert($this->get_category_table_name(), ['category_name' => $category_name]);
+                $category_id = $wpdb->insert_id;
+            }
+
+            // Insert pricing data for the category
+            foreach ($pricing_data as $range => $price) {
+                // Check if the pricing range already exists in the category
+                $exists = $wpdb->get_var($wpdb->prepare(
+                    "SELECT id FROM {$this->get_table_name()} WHERE word_count_range = %s AND category_id = %d", 
+                    $range, 
+                    $category_id
+                ));
+
+                if (!$exists) {
+                    $wpdb->insert($this->get_table_name(), [
+                        'word_count_range' => sanitize_text_field($range),
+                        'price' => floatval($price),
+                        'category_id' => intval($category_id)
+                    ]);
+                }
+            }
         }
     }
 
@@ -120,12 +152,6 @@ class Blogtec_Pricing_Table {
         );
     }
 
-    // Fetch category name
-    private function get_category_name($category_id) {
-        global $wpdb;
-        return $wpdb->get_var($wpdb->prepare("SELECT category_name FROM {$this->get_category_table_name()} WHERE id = %d", $category_id));
-    }
-
     // Render pricing page
     public function render_pricing_page() {
         global $wpdb;
@@ -148,7 +174,7 @@ class Blogtec_Pricing_Table {
 
         ?>
         <div class="wrap">
-            <h1><?php _e('Pricing Table for ', 'blogtec-features-manager'); echo esc_html($this->get_category_name($selected_category_id)); ?></h1>
+            <h1><?php _e('Pricing Table for ', 'blogtec-features-manager'); echo esc_html($this->get_category_table_name($selected_category_id)); ?></h1>
 
             <!-- Category Management -->
             <form method="post">
@@ -180,7 +206,7 @@ class Blogtec_Pricing_Table {
                 <?php wp_nonce_field('save_pricing_action', 'save_pricing_nonce'); ?>
                 <input type="hidden" name="selected_category" value="<?php echo esc_attr($selected_category_id); ?>" />
 
-                <h2><?php _e('Manage Pricing for ', 'blogtec-features-manager'); echo esc_html($this->get_category_name($selected_category_id)); ?></h2>
+                <h2><?php _e('Manage Pricing for ', 'blogtec-features-manager'); echo esc_html($this->get_category_table_name($selected_category_id)); ?></h2>
                 <table class="wp-list-table widefat fixed striped" id="pricing-table">
                     <thead>
                         <tr>

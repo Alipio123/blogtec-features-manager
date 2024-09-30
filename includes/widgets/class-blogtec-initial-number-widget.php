@@ -144,11 +144,11 @@ class Blogtec_Initial_Number_Widget extends \Elementor\Widget_Base {
 
     protected function render() {
         $settings = $this->get_settings_for_display();
-        $number = $settings['initial_number'];
+        $number = intval($settings['initial_number']); // Cast the number to an integer to remove decimals
         $controlled_widget_id = !empty($settings['controlled_widget_id']) ? $settings['controlled_widget_id'] : $this->get_id();
 
         echo '<div id="blogtec-initial-number-' . esc_attr($controlled_widget_id) . '" class="blogtec-initial-number">';
-        echo esc_html($number);
+        echo esc_html($number); // Display the whole number without decimals
         echo '</div>';
     }
 }
