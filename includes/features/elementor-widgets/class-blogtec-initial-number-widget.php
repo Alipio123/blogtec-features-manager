@@ -9,7 +9,7 @@ class Blogtec_Initial_Number_Widget extends \Elementor\Widget_Base {
     }
 
     public function get_title() {
-        return __('Custom Number Range', 'blogtec');
+        return __('Custom Number Range', 'blogtec-features-manager');
     }
 
     public function get_icon() {
@@ -26,7 +26,7 @@ class Blogtec_Initial_Number_Widget extends \Elementor\Widget_Base {
         $this->start_controls_section(
             'content_section',
             [
-                'label' => __('Content', 'blogtec'),
+                'label' => __('Content', 'blogtec-features-manager'),
                 'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -34,16 +34,16 @@ class Blogtec_Initial_Number_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'controlled_widget_id',
             [
-                'label' => __('Controlled Widget ID', 'blogtec'),
+                'label' => __('Controlled Widget ID', 'blogtec-features-manager'),
                 'type' => \Elementor\Controls_Manager::TEXT,
-                'description' => __('Set a unique ID for this widget to be controlled by the Slider Control Widget.', 'blogtec'),
+                'description' => __('Set a unique ID for this widget to be controlled by the Slider Control Widget.', 'blogtec-features-manager'),
             ]
         );
 
         $this->add_control(
             'initial_number',
             [
-                'label' => __('Initial Number', 'blogtec'),
+                'label' => __('Initial Number', 'blogtec-features-manager'),
                 'type' => \Elementor\Controls_Manager::NUMBER,
                 'default' => 100,
             ]
@@ -55,7 +55,7 @@ class Blogtec_Initial_Number_Widget extends \Elementor\Widget_Base {
         $this->start_controls_section(
             'style_section',
             [
-                'label' => __('Style', 'blogtec'),
+                'label' => __('Style', 'blogtec-features-manager'),
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
             ]
         );
@@ -65,7 +65,7 @@ class Blogtec_Initial_Number_Widget extends \Elementor\Widget_Base {
             \Elementor\Group_Control_Typography::get_type(),
             [
                 'name' => 'typography',
-                'label' => __('Typography', 'blogtec'),
+                'label' => __('Typography', 'blogtec-features-manager'),
                 'selector' => '{{WRAPPER}} .blogtec-initial-number',
             ]
         );
@@ -74,7 +74,7 @@ class Blogtec_Initial_Number_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'text_color',
             [
-                'label' => __('Text Color', 'blogtec'),
+                'label' => __('Text Color', 'blogtec-features-manager'),
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .blogtec-initial-number' => 'color: {{VALUE}}',
@@ -87,7 +87,7 @@ class Blogtec_Initial_Number_Widget extends \Elementor\Widget_Base {
             \Elementor\Group_Control_Background::get_type(),
             [
                 'name' => 'background',
-                'label' => __('Background', 'blogtec'),
+                'label' => __('Background', 'blogtec-features-manager'),
                 'types' => [ 'classic', 'gradient' ],
                 'selector' => '{{WRAPPER}} .blogtec-initial-number',
             ]
@@ -98,7 +98,7 @@ class Blogtec_Initial_Number_Widget extends \Elementor\Widget_Base {
             \Elementor\Group_Control_Border::get_type(),
             [
                 'name' => 'border',
-                'label' => __('Border', 'blogtec'),
+                'label' => __('Border', 'blogtec-features-manager'),
                 'selector' => '{{WRAPPER}} .blogtec-initial-number',
             ]
         );
@@ -107,7 +107,7 @@ class Blogtec_Initial_Number_Widget extends \Elementor\Widget_Base {
         $this->add_control(
             'border_radius',
             [
-                'label' => __('Border Radius', 'blogtec'),
+                'label' => __('Border Radius', 'blogtec-features-manager'),
                 'type' => \Elementor\Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
                 'range' => [
@@ -130,7 +130,7 @@ class Blogtec_Initial_Number_Widget extends \Elementor\Widget_Base {
         $this->add_responsive_control(
             'padding',
             [
-                'label' => __('Padding', 'blogtec'),
+                'label' => __('Padding', 'blogtec-features-manager'),
                 'type' => \Elementor\Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
@@ -144,11 +144,14 @@ class Blogtec_Initial_Number_Widget extends \Elementor\Widget_Base {
 
     protected function render() {
         $settings = $this->get_settings_for_display();
-        $number = intval($settings['initial_number']); // Cast the number to an integer to remove decimals
-        $controlled_widget_id = !empty($settings['controlled_widget_id']) ? $settings['controlled_widget_id'] : $this->get_id();
+        $number = intval($settings['initial_number']); // Sanitize number as an integer
+        $controlled_widget_id = !empty($settings['controlled_widget_id']) ? esc_attr($settings['controlled_widget_id']) : esc_attr($this->get_id());
 
-        echo '<div id="blogtec-initial-number-' . esc_attr($controlled_widget_id) . '" class="blogtec-initial-number">';
-        echo esc_html($number); // Display the whole number without decimals
-        echo '</div>';
+        // Use sprintf for better string handling
+        echo sprintf(
+            '<div id="blogtec-initial-number-%s" class="blogtec-initial-number">%s</div>',
+            esc_attr($controlled_widget_id),
+            esc_html($number)
+        );
     }
 }

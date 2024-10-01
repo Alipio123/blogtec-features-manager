@@ -3,11 +3,18 @@
 **Plugin Name:** Blogtec Features Manager  
 **Plugin URI:** [https://blogtec.io](https://blogtec.io)  
 **Description:** A custom plugin to manage all Blogtec.io-specific features and functionalities, including pricing tables, dynamic slider controls, and custom Elementor widgets.  
-**Version:** 1.3.0  
+**Version:** 1.4.0  
 **Author:** Alipio Gabriel  
 **License:** GPL2  
 
 ## Features
+
+### v1.4.0 Highlights:
+- **New:** Tooltip feature added to sliders to display real-time values for word count and post(s).
+- **Improved:** Enhanced code structure for better adherence to OOP principles, making the plugin more maintainable and scalable.
+- **Improved:** Implemented security patches, including proper input sanitization and nonce verification, ensuring safer plugin operations.
+- **Fix:** Resolved a bug where the selected category was not retained in the Pricing Table after saving changes.
+
 
 ### v1.3.0 Highlights:
 - **New:** Blogtec Slider Control Widget for dynamically controlling the pricing table data.
@@ -35,6 +42,12 @@
 
 ## Changelog
 
+### v1.4.0
+- Added tooltips for sliders to display live word count and post(s).
+- Optimized responsiveness for tooltips based on screen size and container.
+- Enhanced code security and performance.
+- Fixed issues related to tooltip positioning and alignment.
+
 ### v1.3.0
 - Added Blogtec Slider Control Widget.
 - Integrated pricing table data retrieval from the WordPress database.
@@ -55,6 +68,7 @@
 1. Create pricing tables via the WordPress admin panel.
 2. Use the Elementor widgets to display dynamic data (e.g., Word Count and Pricing).
 3. Customize the slider appearance in Elementor's style tab.
+4. Leverage the tooltips feature to display real-time updates on sliders.
 
 ## License
 
