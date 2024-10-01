@@ -3,7 +3,7 @@
 Plugin Name: Blogtec Features Manager
 Plugin URI: https://blogtec.io
 Description: A custom plugin to manage all Blogtec.io specific features and functionalities.
-Version: 1.4.1
+Version: 1.4.2
 Author: Alipio Gabriel
 Author URI: https://blogtec.io
 License: GPL2
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('BLOGTEC_PLUGIN_VERSION', '1.4.1');
+define('BLOGTEC_PLUGIN_VERSION', '1.4.2');
 define('BLOGTEC_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('BLOGTEC_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -67,7 +67,13 @@ function blogtec_initiate_update_checker() {
         'blogtec-features-manager'
     );
 
-    // Optional: Set the branch that the plugin should use for updates.
+    // Set the branch to check the plugin updates from
     $updateChecker->setBranch('main');
+
+    // Optional: Enable updates based on the latest commit (version-based)
+    $updateChecker->getVcsApi()->enableReleaseAssets(false);
+
+    // Optional: Add an authentication token if your GitHub repository is private.
+    // $updateChecker->setAuthentication('your-github-token-here');
 }
 add_action('plugins_loaded', 'blogtec_initiate_update_checker');
