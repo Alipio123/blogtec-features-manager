@@ -3,7 +3,7 @@
 Plugin Name: Blogtec Features Manager
 Plugin URI: https://blogtec.io
 Description: A custom plugin to manage all Blogtec.io specific features and functionalities.
-Version: 1.4.0
+Version: 1.4.1
 Author: Alipio Gabriel
 Author URI: https://blogtec.io
 License: GPL2
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('BLOGTEC_PLUGIN_VERSION', '1.3.5');
+define('BLOGTEC_PLUGIN_VERSION', '1.4.1');
 define('BLOGTEC_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('BLOGTEC_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -55,3 +55,19 @@ function blogtec_features_manager_deactivate() {
     Blogtec_Features_Manager::get_instance()->deactivate();
 }
 register_deactivation_hook(__FILE__, 'blogtec_features_manager_deactivate');
+
+//github update checker
+require BLOGTEC_PLUGIN_DIR . 'includes/plugin-update-checker-master/plugin-update-checker.php';
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+function blogtec_initiate_update_checker() {
+    $updateChecker = PucFactory::buildUpdateChecker(
+        'https://github.com/Alipio123/blogtec-features-manager',
+        __FILE__,
+        'blogtec-features-manager'
+    );
+
+    // Optional: Set the branch that the plugin should use for updates.
+    $updateChecker->setBranch('main');
+}
+add_action('plugins_loaded', 'blogtec_initiate_update_checker');
