@@ -431,7 +431,7 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
 
                 // Position and show the tooltip above the slider thumb, relative to the parent container
                 tooltip.css({
-                    left: adjustedLeft + 20 + 'px', // Center tooltip relative to the thumb
+                    left: adjustedLeft  + 'px', // Center tooltip relative to the thumb
                     top: sliderThumb.top - parentOffset.top - tooltip.outerHeight() - 10 + 'px' // Position above the thumb with some spacing
                 }).text(tooltipText).fadeIn(200);
             }
