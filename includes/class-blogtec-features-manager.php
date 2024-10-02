@@ -15,6 +15,7 @@ class Blogtec_Features_Manager {
         // Load admin settings for enabling/disabling features
         $this->load_admin_settings();
         $this->load_features();
+        $this->load_textdomain();
     }
 
     public function activate() {
@@ -65,5 +66,10 @@ class Blogtec_Features_Manager {
         if (class_exists('Blogtec_Elementor_Widgets')) {
             return new Blogtec_Elementor_Widgets();
         }
+    }
+
+    // Method to load the plugin's text domain for translation
+    public function load_textdomain() {
+        load_plugin_textdomain('blogtec-features-manager', false, BLOGTEC_PLUGIN_DIR . 'languages/');
     }
 }
