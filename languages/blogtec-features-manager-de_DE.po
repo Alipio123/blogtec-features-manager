@@ -3,15 +3,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Blogtec Features Manager 1.4.4\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/blogtec-features-manager\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/blogtec-features-"
+"manager\n"
+"POT-Creation-Date: 2024-10-02T03:55:50+00:00\n"
+"PO-Revision-Date: 2024-10-02 11:59+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-02T03:55:50+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: Poedit 3.5\n"
 "X-Domain: blogtec-features-manager\n"
 
 #. Plugin Name of the plugin
@@ -27,7 +29,9 @@ msgstr ""
 
 #. Description of the plugin
 #: blogtec-features-manager.php
-msgid "A custom plugin to manage all Blogtec.io specific features and functionalities."
+msgid ""
+"A custom plugin to manage all Blogtec.io specific features and "
+"functionalities."
 msgstr ""
 
 #. Author of the plugin
@@ -70,7 +74,9 @@ msgid "Controlled Widget ID"
 msgstr ""
 
 #: includes/features/elementor-widgets/class-blogtec-initial-number-widget.php:39
-msgid "Set a unique ID for this widget to be controlled by the Slider Control Widget."
+msgid ""
+"Set a unique ID for this widget to be controlled by the Slider Control "
+"Widget."
 msgstr ""
 
 #: includes/features/elementor-widgets/class-blogtec-initial-number-widget.php:46
@@ -139,7 +145,9 @@ msgid "Provide the heading for the second range slider."
 msgstr ""
 
 #: includes/features/elementor-widgets/class-blogtec-slider-control-widget.php:62
-msgid "Enter the Controlled Widget ID of the Initial Number Display widget to control."
+msgid ""
+"Enter the Controlled Widget ID of the Initial Number Display widget to "
+"control."
 msgstr ""
 
 #: includes/features/elementor-widgets/class-blogtec-slider-control-widget.php:70
@@ -192,7 +200,7 @@ msgstr ""
 
 #: includes/features/elementor-widgets/class-blogtec-slider-control-widget.php:248
 msgid "words"
-msgstr ""
+msgstr "Worte"
 
 #: includes/features/elementor-widgets/class-blogtec-slider-control-widget.php:252
 msgid "Post(s)"
