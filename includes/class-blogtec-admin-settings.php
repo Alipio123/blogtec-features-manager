@@ -14,14 +14,12 @@ class Blogtec_Admin_Settings {
 
     // Add the main settings page for Blogtec Features
     public function add_settings_page() {
-        add_menu_page(
+        add_options_page(
             __('Blogtec Features Settings', 'blogtec-features-manager'),
             __('Blogtec Features', 'blogtec-features-manager'),
             'manage_options',
             'blogtec-features-settings',
-            array($this, 'render_settings_page'),
-            '',
-            '59' // Position it above "Appearance"
+            array($this, 'render_settings_page')
         );
     }
 
