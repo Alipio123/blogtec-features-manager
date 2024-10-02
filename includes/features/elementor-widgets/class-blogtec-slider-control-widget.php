@@ -249,7 +249,7 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
             count($data_rows) - 1, // %4$d
             $this->render_slider_labels($data_rows), // %5$s
             esc_html($second_heading), // %6$s
-            esc_html__('Post(s)', 'blogtec-features-manager'), // %7$s
+            esc_html__('post(s)', 'blogtec-features-manager'), // %7$s
             $this->render_pieces_labels(), // %8$s
         );
 

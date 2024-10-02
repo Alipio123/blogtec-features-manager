@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('BLOGTEC_PLUGIN_VERSION', '1.4.5');
+define('BLOGTEC_PLUGIN_VERSION', '1.4.6');
 define('BLOGTEC_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('BLOGTEC_PLUGIN_URL', plugin_dir_url(__FILE__));
 
