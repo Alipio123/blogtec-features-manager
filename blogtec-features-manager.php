@@ -3,7 +3,7 @@
 Plugin Name: Blogtec Features Manager
 Plugin URI: https://blogtec.io
 Description: A custom plugin to manage all Blogtec.io specific features and functionalities.
-Version: 1.4.5
+Version: 1.4.4
 Author: Alipio Gabriel
 Author URI: https://blogtec.io
 License: GPL2
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('BLOGTEC_PLUGIN_VERSION', '1.4.5');
+define('BLOGTEC_PLUGIN_VERSION', '1.4.4');
 define('BLOGTEC_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('BLOGTEC_PLUGIN_URL', plugin_dir_url(__FILE__));
 
