@@ -1,4 +1,7 @@
 <?php
+// Autoload github Update Checker
+require BLOGTEC_PLUGIN_DIR . 'includes/plugin-update-checker-master/plugin-update-checker.php';
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
 class Blogtec_Features_Manager {
 
@@ -12,10 +15,15 @@ class Blogtec_Features_Manager {
     }
 
     private function __construct() {
+        // Hook the load_textdomain function to init action
+        $this->load_textdomain();
+
+        //load update checker github
+        $this->load_update_checker();
+
         // Load admin settings for enabling/disabling features
         $this->load_admin_settings();
         $this->load_features();
-        $this->load_textdomain();
     }
 
     public function activate() {
@@ -70,6 +78,20 @@ class Blogtec_Features_Manager {
 
     // Method to load the plugin's text domain for translation
     public function load_textdomain() {
-        load_plugin_textdomain('blogtec-features-manager', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+        $loaded = load_plugin_textdomain('blogtec-features-manager', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+    }
+
+    public function load_update_checker() {
+        $updateChecker = PucFactory::buildUpdateChecker(
+            'https://github.com/Alipio123/blogtec-features-manager',
+            __FILE__,
+            'blogtec-features-manager'
+        );
+
+        // Set the branch to check the plugin updates from
+        $updateChecker->setBranch('main');
+
+        // Optional: Add an authentication token if your GitHub repository is private.
+        // $updateChecker->setAuthentication('your-github-token-here');
     }
 }
