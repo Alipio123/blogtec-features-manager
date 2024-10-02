@@ -84,7 +84,7 @@ class Blogtec_Features_Manager {
     public function load_update_checker() {
         $updateChecker = PucFactory::buildUpdateChecker(
             'https://github.com/Alipio123/blogtec-features-manager',
-            __FILE__,
+            plugin_dir_path(__DIR__) . 'blogtec-features-manager.php',
             'blogtec-features-manager'
         );
 
