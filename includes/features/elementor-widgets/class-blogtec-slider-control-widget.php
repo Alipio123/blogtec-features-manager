@@ -42,6 +42,28 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
             ]
         );
 
+        // First Sub Heading Control
+        $this->add_control(
+            'first_sub_heading',
+            [
+                'label' => __('First Sub Heading', 'blogtec-features-manager'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => __('Words', 'blogtec-features-manager'),
+                'description' => __('Provide the 2nd heading for the first range slider.', 'blogtec-features-manager'),
+            ]
+        );
+
+         // First Tooltip Text Control
+        $this->add_control(
+            'first_tooltip_text',
+            [
+                'label' => __('First Tooltip Text Control', 'blogtec-features-manager'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => __('Words', 'blogtec-features-manager'),
+                'description' => __('Provide the tooltip label for the first range slider.', 'blogtec-features-manager'),
+            ]
+        );
+
         // Second Heading Control
         $this->add_control(
             'second_heading',
@@ -50,6 +72,28 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
                 'type' => \Elementor\Controls_Manager::TEXT,
                 'default' => __('Choose number of pieces', 'blogtec-features-manager'),
                 'description' => __('Provide the heading for the second range slider.', 'blogtec-features-manager'),
+            ]
+        );
+
+        // Second Sub Heading Control
+        $this->add_control(
+            'second_sub_heading',
+            [
+                'label' => __('Second Sub Heading', 'blogtec-features-manager'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => __('Piece(s)', 'blogtec-features-manager'),
+                'description' => __('Provide the 2nd heading for the second range slider.', 'blogtec-features-manager'),
+            ]
+        );
+
+        // Second Tooltip Text Control
+        $this->add_control(
+            'second_tooltip_text',
+            [
+                'label' => __('Second Tooltip Text Control', 'blogtec-features-manager'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => __('Pieces', 'blogtec-features-manager'),
+                'description' => __('Provide the tooltip label for the second range slider.', 'blogtec-features-manager'),
             ]
         );
 
@@ -214,7 +258,12 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
         $pricing_table_id = intval($settings['pricing_table_id']);
         $widget_id = esc_attr($this->get_id());
         $first_heading = esc_html($settings['first_heading']);
+        $first_sub_heading = esc_html($settings['first_sub_heading']);
         $second_heading = esc_html($settings['second_heading']);
+        $second_sub_heading = esc_html($settings['second_sub_heading']);
+        //tooltip
+        $first_tooltip_text = esc_html($settings['first_tooltip_text']);
+        $second_tooltip_text = esc_html($settings['second_tooltip_text']);
 
         $data_rows = $this->get_pricing_table_data($pricing_table_id);
         if (empty($data_rows)) {
@@ -245,11 +294,11 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
             </div>',
             esc_attr($widget_id), // %1$s
             esc_html($first_heading), // %2$s
-            esc_html__('words', 'blogtec-features-manager'), // %3$s
+            esc_html($first_sub_heading), // %3$s
             count($data_rows) - 1, // %4$d
             $this->render_slider_labels($data_rows), // %5$s
             esc_html($second_heading), // %6$s
-            esc_html__('post(s)', 'blogtec-features-manager'), // %7$s
+            esc_html($second_sub_heading), // %7$s
             $this->render_pieces_labels(), // %8$s
         );
 
@@ -281,6 +330,10 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
     }
 
     private function render_styles_and_scripts($widget_id, $controlled_widget_id, $data_rows) {
+        $settings = $this->get_settings_for_display();
+         //tooltip
+        $first_tooltip_text = esc_html($settings['first_tooltip_text']);
+        $second_tooltip_text = esc_html($settings['second_tooltip_text']);
     ?>
     <style>
         .word_count_wrap {
@@ -382,6 +435,8 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
             var word_count_container = $('.word_count-<?php echo esc_js($widget_id); ?>');
             var piecesCountContainer = $('.pieces_count-<?php echo esc_js($widget_id); ?>');
             var tooltip = $('#tooltip-<?php echo esc_js($widget_id); ?>');
+            var first_tooltip_text = '<?php echo esc_js($first_tooltip_text); ?>'
+            var second_tooltip_text = '<?php echo esc_js($second_tooltip_text); ?>'
 
             if (display.length) {
                 display.text(parseInt(dataRows[0].price));
@@ -411,12 +466,12 @@ class Blogtec_Slider_Control_Widget extends \Elementor\Widget_Base {
                 if (sliderType === 'word_count') {
                     var index = slider.val();
                     var wordCount = dataRows[index].word_count_max;
-                    tooltipText = wordCount + ' words';
+                    tooltipText = wordCount + ' ' + first_tooltip_text;
                     sliderThumb = slider[0].getBoundingClientRect();
                     position = slider.val() / slider.attr('max');
                 } else if (sliderType === 'pieces') {
                     var pieces = piecesSlider.val();
-                    tooltipText = pieces + ' post(s)';
+                    tooltipText = pieces + ' ' + second_tooltip_text;
                     sliderThumb = piecesSlider[0].getBoundingClientRect();
                     position = piecesSlider.val() / piecesSlider.attr('max');
                 }
